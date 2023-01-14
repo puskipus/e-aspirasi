@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nik',
         'email',
         'password',
     ];
@@ -42,11 +43,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function posts() {
-        return $this->hasMany(Post::class);
+    public function aspirasis() {
+        return $this->hasMany(Aspirasi::class);
     }
 
-    public function comments() {
-        return $this->hasMany(Comment::class);
+    public function komentars() {
+        return $this->hasMany(Komentar::class);
     }
 }

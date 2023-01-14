@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\Post\ShowPostController;
-use App\Http\Controllers\Post\StoreCommentController;
-use App\Http\Controllers\Post\StorePostController;
-use App\Http\Controllers\TimeLineController;
+use App\Http\Controllers\Aspirasi\DeleteAspirasiContoller;
+use App\Http\Controllers\Aspirasi\DeleteKomentarController;
+use App\Http\Controllers\Aspirasi\ShowMasingAspirasiController as AspirasiShowMasingAspirasiController;
+use App\Http\Controllers\Aspirasi\StoreAspirasiController;
+use App\Http\Controllers\Aspirasi\StoreKomentarController;
+use App\Http\Controllers\Aspirasi\updateStatusController;
+use App\Http\Controllers\ShowAspirasi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,13 +21,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/dashboard', TimeLineController::class)->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', ShowAspirasi::class)->middleware(['auth'])->name('dashboard');
 
-Route::post('post', StorePostController::class)->name('post.store');
-Route::get('post/{post}', ShowPostController::class)->name('post.show');
-Route::post('post/{post}/comment', StoreCommentController::class)->name('post.comment.store');
+Route::post('aspirasi', StoreAspirasiController::class)->name('aspirasi.store');
+Route::get('aspirasi/{aspirasi}', AspirasiShowMasingAspirasiController::class)->name('aspirasi.show');
+Route::post('aspirasi/{aspirasi}/komentar', StoreKomentarController::class)->name('aspirasi.komentar.store');
+Route::post('aspirasi/{aspirasi}/status', updateStatusController::class)->name('aspirasi.update.status');
+Route::delete('aspirasi/{aspirasi}/komentar/{komentar}', DeleteKomentarController::class)->name('aspirasi.komentar.destroy');
+Route::delete('aspirasi/{aspirasi}', DeleteAspirasiContoller::class)->name('aspirasi.destroy');
 
 require __DIR__.'/auth.php';
